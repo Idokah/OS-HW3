@@ -4,13 +4,14 @@
 
 int mat[N][M];
 int product_arr[M];
-//create cond_variables?
+
 pthread_cond_t initializes_done = PTHREAD_COND_INITIALIZER;
 pthread_cond_t multipliers_done = PTHREAD_COND_INITIALIZER;
 pthread_mutex_t mult_mutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t fact_mutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t m2 = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t get_random = PTHREAD_MUTEX_INITIALIZER;
+
 int done_init = 0;
 int done_multipliers = 0;
 
@@ -79,9 +80,9 @@ int main() {
     pthread_t multipliers_threads[M];
     pthread_t factor_threads[M];
 
-    create_threads2(initialize_threads, init_row, N, INIT_CREATED);
-    create_threads2(multipliers_threads, max_multiply_to_product_arr, M, MULT_CREATED);
-    create_threads2(factor_threads, find_and_print_factors, M, FACT_CREATED);
+    create_threads(initialize_threads, init_row, N, INIT_CREATED);
+    create_threads(multipliers_threads, max_multiply_to_product_arr, M, MULT_CREATED);
+    create_threads(factor_threads, find_and_print_factors, M, FACT_CREATED);
 
     wait_for_threads(initialize_threads, N, INIT_TERMINATED);
     write_matrix_atomic();
@@ -92,11 +93,11 @@ int main() {
 
     wait_for_threads(factor_threads, M, FACT_TERMINATED);
 
-    print_message_atomic('BYE');
+    print_msg("The program finished");
     pthread_exit(NULL);
 }
 
-void create_threads2(pthread_t* threads_arr, thread_func func, int num, char* finish_msg) {
+void create_threads(pthread_t* threads_arr, thread_func func, int num, char* finish_msg) {
     int *ptr;
     for (int i = 0; i < num; ++i) {
         ptr = malloc(sizeof(int));

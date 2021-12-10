@@ -7,7 +7,7 @@
 
 #define MAX_MESSAGE_SIZE  100
 
-void create_threads2(pthread_t* threads_arr, thread_func func, int num, char* finish_msg);
+void create_threads(pthread_t* threads_arr, thread_func func, int num, char* finish_msg);
 void wait_for_threads(pthread_t* threads, int num, char* finish_message);
 void signal_threads(pthread_cond_t* cond, int* done_flag);
 void print_message_atomic(char* msg);
