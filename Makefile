@@ -1,4 +1,4 @@
-CFLAGS = -Wall
+CFLAGS = -Wall -pthread -lm
 CC = gcc -std=c99
 ECHO = echo "going to compile for target $@"
 PROG = ex3_q1
